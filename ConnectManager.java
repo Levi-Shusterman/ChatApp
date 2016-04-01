@@ -1,4 +1,5 @@
-import java.net.*; 
+import java.net.*;
+import java.util.Vector;
 import java.io.*; 
 import java.awt.*;
 import java.awt.event.*;
@@ -12,7 +13,7 @@ class ConnectManager{
    
      // Network Items
    boolean Connected;
-   PrintWriter Out;
+   ObjectOutputStream Out;
    BufferedReader In;
    private Socket Sock;
    private ChatGui Gui;
@@ -25,7 +26,7 @@ class ConnectManager{
 	  Gui = gui;
     try{
             Sock = new Socket(IP_Address, Port );       
-             Out = new PrintWriter(Sock.getOutputStream(), true);
+             Out = new ObjectOutputStream(Sock.getOutputStream());
             In = new BufferedReader(new InputStreamReader( Sock.getInputStream()));
             Connected = true;
       } catch (NumberFormatException e) {
@@ -46,10 +47,14 @@ class ConnectManager{
    * 
    * Send a messsage to all users
    * */
-  public boolean SendMessage(String message){
-       try
+  @SuppressWarnings("null")
+public boolean SendMessage(String message){
+      Vector<String> out_message = new Vector<String>();
+      out_message.add(message);
+	  
+	  try
       {
-        Out.println(message);
+        Out.writeObject(out_message);
       }
       catch (Exception e) 
       {

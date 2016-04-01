@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.Vector;
 
 /**
  * Thread that deals with a client connection
@@ -11,7 +13,7 @@ class ClientThread implements Runnable{
   Socket Sock;
   static ServerGui Gui;
 //  ObjectInputStream Reader;
-    BufferedReader Reader;
+    ObjectInputStream Reader;
   boolean ClientConnected;
   
   
@@ -20,9 +22,7 @@ class ClientThread implements Runnable{
     Gui = gui;
     
        try {
-         InputStreamReader isReader = new InputStreamReader(Sock.getInputStream());
-             Reader = new BufferedReader(isReader);
-//             Reader = new ObjectInputStream(Sock.getInputStream());
+             Reader = new ObjectInputStream(Sock.getInputStream());
 
            } catch(Exception ex) {ex.printStackTrace();}
            
@@ -30,15 +30,24 @@ class ClientThread implements Runnable{
            
   }
  
-  public void run(){
-    System.out.println ("New Communication Thread Started");
+  @SuppressWarnings("unchecked")
+public void run(){
+	  Vector<String> readin = new Vector<String>();
+     Gui.history.insert("New Communication Thread Started",0);
 
-           String message;
-           try {
-               while ((message = Reader.readLine()) != null) {
-                 Gui.history.insert(message + "\n" ,0); 
-               } // close while
-            } catch(Exception ex) {ex.printStackTrace();}
+       try {
+           while ((readin = (Vector<String>) Reader.readObject()) != null) {
+//             Gui.history.insert(message + "\n" ,0);
+        	   
+        	   
+        	   if( readin.size()>=1){
+        		   Gui.history.insert( readin.get(0), 0 );
+        	   }else if( readin.size() == 0){
+        		   Gui.history.insert("Received an empty object\n", 0);
+        	   }
+        	   
+           } // close while
+        } catch(Exception ex) {ex.printStackTrace();}
   }
 
 }

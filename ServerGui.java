@@ -12,7 +12,6 @@ public class ServerGui extends JFrame{
   JLabel machineInfo;
   JLabel portInfo;
   JTextArea history;
-  private boolean running;
 
   // Network Items
   boolean serverContinue;
@@ -28,7 +27,6 @@ public class ServerGui extends JFrame{
       container.setLayout( new FlowLayout() );
 
 //       create buttons
-      running = false;
       ssButton = new JButton( "Terminate" );
 //      ssButton.addActionListener( this );
       ssButton.addActionListener(new ActionListener(){
