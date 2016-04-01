@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
 
@@ -37,7 +39,10 @@ class ClientThread implements Runnable{
   Socket Sock;
   static ServerGui Gui;
  
+  // Sending and receiving messages
   ObjectInputStream Reader;
+  ObjectOutputStream Writer;
+  
   boolean ClientConnected;
   
   // Refers to threads
@@ -47,19 +52,21 @@ class ClientThread implements Runnable{
   int MyIndex;
   
   public ClientThread( Socket sock, ServerGui gui,
-		  Vector<ThreadIdentifier> outstreams,
-		  int index){
-	
+	  Vector<ThreadIdentifier> outstreams,
+	  int index){
+
 	  outStreams = outstreams;
 	  MyIndex = index;
-	  
+  
     Sock = sock;
     Gui = gui;
     
        try {
              Reader = new ObjectInputStream(Sock.getInputStream());
-             outStreams.add(MyIndex, 
-            		 new ThreadIdentifier(Reader));
+             Writer = new ObjectOutputStream(Sock.getOutputStream());
+             
+             // Add yourself to the threads vector 
+             outStreams.add(MyIndex, new ThreadIdentifier(Writer) );
              
            } catch(Exception ex) {ex.printStackTrace();}
            
@@ -74,17 +81,48 @@ public void run(){
 
        try {
            while ((readin = (Vector<String>) Reader.readObject()) != null) {
-//             Gui.history.insert(message + "\n" ,0);
         	   
-        	   
-        	   if( readin.size()>=1){
-        		   Gui.history.insert( readin.get(0), 0 );
-        	   }else if( readin.size() == 0){
-        		   Gui.history.insert("Received an empty object\n", 0);
-        	   }
-        	   
+        	   processMessage(readin);
+    	   
            } // close while
         } catch(Exception ex) {ex.printStackTrace();}
   }
 
+
+  	/**
+  	 * Process a message from the client and decide how to respond to it
+  	 * 
+  	 * @param readin : The message from the client
+  	 */
+	private void processMessage(Vector<String> readin ){
+ 	   String message = readin.elementAt(0);
+		
+ 	   if( readin.size()>=1){
+ 		   Gui.history.insert( readin.get(0), 0 );
+ 	   }else if( readin.size() == 0){
+ 		   Gui.history.insert("Received an empty object\n", 0);
+ 	   }		
+ 	   
+ 	   /**
+ 	    * A size of one means send the message to everyone
+ 	    */
+ 	   if( readin.size() == 1){
+ 		   for( int i = 0; i < outStreams.size(); i++){
+
+ 			   // Index is initialized
+ 			   if(outStreams.elementAt(i) != null){
+ 				   try {
+ 					   
+ 					// To the socket object output stream of this thread, 
+ 					 // write the message   
+					outStreams.elementAt(i).outStream.writeObject(message);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+ 			   }
+ 		   }
+ 	   }
+	}
 }
