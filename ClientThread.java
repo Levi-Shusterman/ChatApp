@@ -5,25 +5,62 @@ import java.net.Socket;
 import java.util.Vector;
 
 /**
+ * @author Levi Shusterman
+ * 	working with Nigel Flower
+ * 
+ * 	CS 342 Software Design 
+ *  With Professor Troy at UIC
+ * 
  * Thread that deals with a client connection
  * Receives messages from its client
  * Relays that message to its sibling clients through a shared vector
  * */
+
+/**
+ * Messaging Protocol
+ * 
+ * Vector<String> passed between Server
+ * and Client. 
+ * 
+ * Receiving from Client:
+ * 
+ * First element is the message itself. 
+ * 
+ * If the size is one, it is meant for
+ * everyone in the chat.
+ * 
+ * If the size is not one, the remaining 
+ * elements specify to whom it should be sent.
+ *
+ */
 class ClientThread implements Runnable{
   Socket Sock;
   static ServerGui Gui;
-//  ObjectInputStream Reader;
-    ObjectInputStream Reader;
+ 
+  ObjectInputStream Reader;
   boolean ClientConnected;
   
+  // Refers to threads
+  Vector<ThreadIdentifier> outStreams;
   
-  public ClientThread( Socket sock, ServerGui gui ){
+  // My index in outStreams vector
+  int MyIndex;
+  
+  public ClientThread( Socket sock, ServerGui gui,
+		  Vector<ThreadIdentifier> outstreams,
+		  int index){
+	
+	  outStreams = outstreams;
+	  MyIndex = index;
+	  
     Sock = sock;
     Gui = gui;
     
        try {
              Reader = new ObjectInputStream(Sock.getInputStream());
-
+             outStreams.add(MyIndex, 
+            		 new ThreadIdentifier(Reader));
+             
            } catch(Exception ex) {ex.printStackTrace();}
            
          ClientConnected = true;

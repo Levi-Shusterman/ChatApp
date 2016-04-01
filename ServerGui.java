@@ -1,4 +1,5 @@
-import java.net.*; 
+import java.net.*;
+import java.util.Vector;
 import java.io.*; 
 import java.awt.*;
 import java.awt.event.*;
@@ -77,6 +78,9 @@ public class ServerGui extends JFrame{
       * Spawns threads to receive and send messages between them
       * */
      private void startListen() {
+    	   Vector<ThreadIdentifier> outStreams
+    	   	= new Vector<ThreadIdentifier>();
+    	       	   
 	       try{
 	         serverSocket = new ServerSocket(9090, 0, InetAddress.getByName("localhost"));      
 	         serverSocket.setReuseAddress(true);
@@ -93,16 +97,24 @@ public class ServerGui extends JFrame{
 	         e.printStackTrace();
 	       }
 
-
+	   // index of each thread in
+	      // outStreams vector
+	   int MyIndex = 0;
+	   
        serverContinue = true;
 	   while(serverContinue){
 	         try{
-		          Thread t = new Thread(new ClientThread(serverSocket.accept(), this));
+		          Thread t = new Thread(new ClientThread(serverSocket.accept(), this,
+		        		 outStreams, MyIndex));
+		          
+		          MyIndex++;
 		          t.start();
+		          
 		          history.insert("Accepted a new connection\n", 0);
+		          
 	     }catch( IOException e){
 	    	 history.insert("Failed to accept a new connection\n", 0);
-	         }
+	        }
 	   }
      }
 }

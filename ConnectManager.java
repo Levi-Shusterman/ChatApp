@@ -5,6 +5,34 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * @author Levi Shusterman
+ * 	working with Nigel Flower
+ * 
+ * 	CS 342 Software Design 
+ *  With Professor Troy at UIC
+ * 
+ * Connect to the Server, send 
+ * and receive messages from it.
+ * */
+
+/**
+ * Messaging Protocol
+ * 
+ * Vector<String> passed between Server
+ * and Client. 
+ * 
+ * Sending:
+ * 
+ * First element is the message itself. 
+ * 
+ * If the size is one, it is meant for
+ * everyone in the chat.
+ * 
+ * If the size is not one, the remaining 
+ * elements specify to whom it should be sent.
+ *
+ */
 class ConnectManager{
   
   // connection info
@@ -48,7 +76,7 @@ class ConnectManager{
    * Send a messsage to all users
    * */
   @SuppressWarnings("null")
-public boolean SendMessage(String message){
+  public boolean SendMessage(String message){
       Vector<String> out_message = new Vector<String>();
       out_message.add(message);
 	  
@@ -79,4 +107,11 @@ public boolean SendMessage(String message){
     return false;
   }
   
+  /**
+   * Gui Interface
+   * 
+   * The name of the display field
+   * should be history
+   */
+   
 }
