@@ -67,6 +67,10 @@ class ConnectManager{
         }
         
         Gui.history.insert("Successfuly connected: " + IP_Address + " " + Port,0);
+        
+        // Listen on messages from the server
+        Thread t = new Thread( new Receiver(Gui, Sock));
+        t.start();
             
   }
   
@@ -106,6 +110,7 @@ class ConnectManager{
   public boolean CloseConnection(){
     return false;
   }
+  
   
   /**
    * Gui Interface
