@@ -37,6 +37,7 @@ public class ChatGui extends JFrame
       container.add (upperPanel, BorderLayout.NORTH);
       
       // create buttons
+      
 //      connected = false;
 
       upperPanel.add ( new JLabel ("Message: ", JLabel.CENTER) );

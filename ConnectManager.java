@@ -6,6 +6,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
+ * The Gui instantiates this class to be able to connect to the server
+ * 
  * @author Levi Shusterman
  * 	working with Nigel Flower
  * 
@@ -33,7 +35,7 @@ import javax.swing.*;
  * elements specify to whom it should be sent.
  *
  */
-class ConnectManager{
+class ConnectManager implements Client{
   
   // connection info
    private Integer Port = 9090;
@@ -69,8 +71,8 @@ class ConnectManager{
         Gui.history.insert("Successfuly connected: " + IP_Address + " " + Port,0);
         
         // Listen on messages from the server
-        Thread t = new Thread( new Receiver(Gui, Sock));
-        t.start();
+        Thread listen = new Thread( new Receiver(Gui, Sock));
+        listen.start();
             
   }
   
@@ -100,7 +102,7 @@ class ConnectManager{
   /**
    * Send a message to the users specified in the users[] array
    * */
-  public boolean SendMessage( String message, String[] users){
+  public boolean SendMessage( String message, Vector<String>to_whom){
     return false;
   }
   
