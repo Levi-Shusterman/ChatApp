@@ -20,7 +20,7 @@ public class ChatGui5 extends JFrame
     private JTextField portInfo;
     private JTextField message;
     private JTextArea history;
-    private JTextArea users;
+    private JList users;
     private JPanel usersPanel;
     private JPanel chatPanel;
     private JPanel bottomPanel;
@@ -47,11 +47,12 @@ public class ChatGui5 extends JFrame
         // The users panel will contain a list of users to the left side
         usersPanel = new JPanel();
         usersPanel.setLayout(new BorderLayout());
-        users = new JTextArea();
-        users.setEditable(false);
-        users.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        users = new JList(new String[]{"Nigel", "Levi", "Mike"});
+        users.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        users.setLayoutOrientation(JList.VERTICAL);
+        users.setVisibleRowCount(-1);
         
-        addUser(username);
+        //addUser(username);
         
         usersPanel.add(userLabel, "North");
         usersPanel.add(users, "Center");
@@ -83,7 +84,7 @@ public class ChatGui5 extends JFrame
             }
         });
         
-        sendButton = new JButton("Send");
+        sendButton = new JButton("Send to all");
         sendButton.setEnabled(true);
         
         // We will set the "default button" to the send button, so whenever the user presses
@@ -154,7 +155,7 @@ public class ChatGui5 extends JFrame
 
     public void addUser(String username)
     {
-        users.append(username + "\n");
+        //users.append(username + "\n");
     }
     
     public void addMessage(String message)
@@ -165,7 +166,7 @@ public class ChatGui5 extends JFrame
  
     public static void main(String args[]) {
 		String username = JOptionPane.showInputDialog(null, "Please enter your user name: ");
-        ChatGui5 application = new ChatGui5("Nigel");
+        ChatGui5 application = new ChatGui5(username);
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
