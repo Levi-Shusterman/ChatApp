@@ -14,25 +14,19 @@ public class ChatGui5 extends JFrame implements GuiClient
     private JButton sendButton;
     private JTextField message;
     private JTextArea history;
+    
     private JPanel usersPanel;
-    private JPanel buttonsPanel;
     private JPanel chatPanel;
     private JPanel bottomPanel;
+    
+    // Connecting to the server
     private String userName;
 	private ConnectManager Connector;
-
-    // Network Items
-    // boolean connected;
-    // Socket echoSocket;
-    // PrintWriter out;
-    // BufferedReader in;
-
-    //private ConnectManager Connector;
-
-    private String username;
-    private JCheckBox allButton;
-    private Vector<JCheckBox> userCheckButtonsList;
-    private Vector<Boolean> chattingTo;
+    
+	// Represents list of users in the chat room
+    private JList list;
+    private DefaultListModel userList;
+    JScrollPane listScrollPane;
     
     // set up GUI
     public ChatGui5(String username) {
@@ -48,33 +42,21 @@ public class ChatGui5 extends JFrame implements GuiClient
         usersPanel = new JPanel();
         usersPanel.setLayout(new BorderLayout());
         
-        userCheckButtonsList = new Vector<JCheckBox>();
+        // Gui object will observe this list
+        userList = new DefaultListModel();
+        list = new JList(userList);
         
-        addUser("Nigel");
-        addUser("Levi");
-        addUser("Mike");
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        //list.setSelectedIndex(0);
         
-        allButton = new JCheckBox("all");
-        allButton.addActionListener(ae ->{
-            for(JCheckBox box : userCheckButtonsList)
-                if(box.isSelected()) 
-                    box.setEnabled(true);
-                else 
-                    box.setEnabled(false);
-        });
+        listScrollPane = new JScrollPane(list);
+        listScrollPane.setLayout(new ScrollPaneLayout());
+        listScrollPane.add(Box.createRigidArea(new Dimension(0, 20)));
+        listScrollPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         
-        userCheckButtonsList.add(allButton);
-        
-        buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.PAGE_AXIS));
-        buttonsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        
-        for(JCheckBox user : userCheckButtonsList)
-            buttonsPanel.add(user);
-        
+
         usersPanel.add(userLabel, "North");
-        usersPanel.add(buttonsPanel, "Center");
+        usersPanel.add(listScrollPane, "Center");
         
         // The message field and text area will be enclosed in the chat panel
         chatPanel = new JPanel();
@@ -131,33 +113,43 @@ public class ChatGui5 extends JFrame implements GuiClient
         add(usersPanel, "West");
         add(chatPanel, "Center");
         
-        Connector = new ConnectManager(this);
-        Connector.SendName(userName);
-
+//        Connector = new ConnectManager(this);
+//        Connector.SendName(userName);
+        
+        addUser("Jane"); addUser("Mike"); removeUser("Jane");
         
         setVisible(true);
     } // end CountDown constructor
-
-    public void addUser(String username)
+    
+    /**
+     * Add a new user in the chat room to the panel
+     * @param username
+     */
+    @SuppressWarnings("unchecked")
+	public void addUser(String username)
     {
-        JCheckBox newUser = new JCheckBox(username);
-        newUser.setSelected(true);
-        userCheckButtonsList.add(newUser);
-        
+    	userList.addElement(username);
     }
+    
+    @SuppressWarnings("unchecked")
+	public void removeUser( String username){
+    	userList.removeElement(username);
+    }
+    
+    
     
     public void addMessage(String message, String username)
     {
         history.append("<" + username  + " to: ");
         
-        for(JCheckBox box : userCheckButtonsList)
-        {
-            if(box.isSelected())
-                history.append(box.getText() + " ");
-        }
-        
-        history.append(" > " + message + "\n");
-        
+//        for(JCheckBox box : userCheckButtonsList)
+//        {
+//            if(box.isSelected())
+//                history.append(box.getText() + " ");
+//        }
+//        
+//        history.append(" > " + message + "\n");
+//        
         this.message.setText("");
     }
  
