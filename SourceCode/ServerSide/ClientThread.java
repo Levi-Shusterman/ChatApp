@@ -60,6 +60,8 @@ class ClientThread implements Runnable{
 
 	  outStreams = outstreams;
 	  MyIndex = index;
+	  
+	  ClientConnected = true;
   
     Sock = sock;
     Gui = gui;
@@ -76,6 +78,26 @@ class ClientThread implements Runnable{
          ClientConnected = true;
            
   }
+    /**
+     * Stop the thread because the client
+     * exited the chat room
+     * 
+     * Nullify its index in the outStreams vector
+     */
+    void ExitChat(){
+	  // Remove yourself 
+	  	outStreams.set(MyIndex, null);
+	  
+	  	// build the message
+	   String name = MyName;
+	   Vector<String> to_send = new Vector<String>();
+	   to_send.add("REMOVE USER");
+	   to_send.add(name);
+	   
+	   sendMessageToAll(to_send);
+	   ClientConnected = false;
+	   Gui.history.insert(MyName + " exited chat just now.\n",0);	   
+  }
  
   @SuppressWarnings("unchecked")
 public void run(){
@@ -85,7 +107,8 @@ public void run(){
      //updateClientWithUsers();
      
        try {
-           while ((readin = (Vector<String>) Reader.readObject()) != null) {
+           while ((readin = (Vector<String>) Reader.readObject()) != null
+        		   && ClientConnected ) {
         	   
         	   processMessage(readin);
     	   
@@ -129,9 +152,12 @@ public void run(){
   	 * 
   	 * @param readin : The message from the client
   	 */
-	private void processMessage(Vector<String> readin ){
+	private synchronized void processMessage(Vector<String> readin ){
  	   String key = readin.elementAt(0);
- 	   
+ 	   	   
+ 	   	   if( key.equals("EXIT")){
+ 	   		   ExitChat();
+ 	   	   }
 	 	   try{
 		 	   /**
 		 	    * Received the name of this thread from client

@@ -52,10 +52,16 @@ class Receiver implements Runnable {
 		// User entered the chat room
 		if( readin.elementAt(0).equals("ADD USER")){
 			Gui.addUser(readin.elementAt(1));
+			Gui.DisplayMessage( "Entered Chat",readin.elementAt(1) );
+
 		}
 		
-		//TODO Process removing a user when he exits the chat room
-		
+		// Process removing a user when he exits the chat room
+		else if(readin.elementAt(0).equals("REMOVE USER")){
+			Gui.removeUser(readin.elementAt(1));
+			Gui.DisplayMessage( "Exited Chat",readin.elementAt(1) );
+
+		}
 		// Message from the server
 		else if ( readin.size() == 1 ){
 			Gui.DisplayMessage( readin.elementAt(0),"Server" );

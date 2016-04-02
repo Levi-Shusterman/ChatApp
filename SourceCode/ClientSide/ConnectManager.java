@@ -95,6 +95,7 @@ public class ConnectManager implements Client{
 	  try
       {
         Out.writeObject(out_message);
+        Gui.DisplayMessage(message, "Me");
       }
       catch (Exception e) 
       {
