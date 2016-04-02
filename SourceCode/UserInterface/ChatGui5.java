@@ -138,7 +138,7 @@ public class ChatGui5 extends JFrame implements GuiClient
     
     public void addMessage(String message, String username)
     {
-        history.append("<" + username  + " to: ");
+        history.append("<" + username  + " ");
         
 //        for(JCheckBox box : userCheckButtonsList)
 //        {

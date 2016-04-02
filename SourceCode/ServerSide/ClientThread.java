@@ -174,6 +174,7 @@ public void run(){
 			   
 			   Vector<String> to_send = new Vector<String>();
 			   String message = readin.elementAt(1);
+			   to_send.add(MyName);
 			   to_send.add(message);
 			   
 			   sendMessageToAll(to_send);

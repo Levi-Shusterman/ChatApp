@@ -48,17 +48,25 @@ class Receiver implements Runnable {
 	}
 
 	private void processMessage(Vector<String> readin) {
-		// TODO Auto-generated method stub
 		
 		// User entered the chat room
 		if( readin.elementAt(0).equals("ADD USER")){
 			Gui.addUser(readin.elementAt(1));
 		}
 		
+		//TODO Process removing a user when he exits the chat room
+		
 		// Message from the server
-		if ( readin.size() ==1 ){
-			Gui.DisplayMessage(readin.elementAt(0),"FromServer");
+		else if ( readin.size() == 1 ){
+			Gui.DisplayMessage( readin.elementAt(0),"Server" );
 		}
+		
+		// Message from individual user
+		else{
+			String name = readin.elementAt(0);
+			Gui.DisplayMessage(readin.elementAt(1), name);
+		}
+		
 		
 	}
 
