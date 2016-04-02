@@ -2,6 +2,8 @@ package UserInterface;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Vector;
+
 import javax.swing.*;
 
 public class ChatGui5 extends JFrame implements GuiClient
@@ -18,7 +20,7 @@ public class ChatGui5 extends JFrame implements GuiClient
     private JPanel usersPanel;
     private JPanel chatPanel;
     private JPanel bottomPanel;
-    private String username;
+    private String userName;
 
     // Network Items
     // boolean connected;
@@ -36,7 +38,7 @@ public class ChatGui5 extends JFrame implements GuiClient
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        this.username = username;
+        this.userName = username;
         
         // The users panel will contain a list of users to the left side
         usersPanel = new JPanel();
@@ -74,7 +76,7 @@ public class ChatGui5 extends JFrame implements GuiClient
             @Override
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER && !message.getText().equals(""))
-                    addMessage(message.getText());
+                    addMessage(message.getText(), userName);
             }
         });
         
@@ -104,7 +106,7 @@ public class ChatGui5 extends JFrame implements GuiClient
         //users.append(username + "\n");
     }
     
-    public void addMessage(String message)
+    public void addMessage(String message, String username)
     {
         history.append("<" + username  + "> " + message + "\n");
         this.message.setText("");
@@ -115,4 +117,28 @@ public class ChatGui5 extends JFrame implements GuiClient
         ChatGui5 application = new ChatGui5(username);
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+    
+    @Override
+    public void DebugMessage(String message){
+    	addMessage(message, "debug");
+    }
+
+	@Override
+	public void EnteredChatRoom(Vector<String> friends) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void DisplayMessage(String message, String name) {
+		// TODO Auto-generated method stub
+    	addMessage(message, name);
+
+	}
+
+	@Override
+	public void ChatRoomTerminated() {
+		// TODO Auto-generated method stub
+		
+	}
 }

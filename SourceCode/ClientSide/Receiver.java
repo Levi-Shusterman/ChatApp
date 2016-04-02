@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.Vector;
 
 import UserInterface.ChatGui;
+import UserInterface.ChatGui5;
 
 /**
    * 
@@ -17,11 +18,11 @@ import UserInterface.ChatGui;
 
 class Receiver implements Runnable {
 	
-	ChatGui Gui;
+	ChatGui5 Gui;
 	ObjectInputStream Reader;
 	
-	public Receiver(ChatGui gui, Socket sock) {
-		Gui = gui;
+	public Receiver(ChatGui5 gui2, Socket sock) {
+		Gui = gui2;
 		
 		try {
 			Reader = new ObjectInputStream(sock.getInputStream());
@@ -51,7 +52,7 @@ class Receiver implements Runnable {
 		
 		// Message from the server
 		if ( readin.size() ==1 ){
-			Gui.history.insert(readin.elementAt(0), 0);
+			Gui.DisplayMessage(readin.elementAt(0),"FromServer");
 		}
 		
 	}

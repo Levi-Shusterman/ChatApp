@@ -22,9 +22,7 @@ public interface GuiClient {
 	  * @param friends A vector of the people who are currently 
 	  * in the chat room
 	  */
-	 default void EnteredChatRoom(Vector<String> friends){
-		
-	}
+	 void EnteredChatRoom(Vector<String> friends);
 	 
 	 /**
 	  * Client calls this method when a message has been received.
@@ -33,18 +31,14 @@ public interface GuiClient {
 	  * @param message
 	  * @param name 	Name of person who sent message
 	  */
-	 default void DisplayMessage( String message, String name){
-		 
-		 
-	 }
+	 void DisplayMessage( String message, String name);
 	 
 	 /**
 	  * The chat has ended. Terminate all the threads and exit.
 	  * 
 	  */
-	 default void ChatRoomTerminated(){
-		 
-	 }
+	 void ChatRoomTerminated();
+		
 	 
 	 /**
 	  * Display a debugging message on the gui
@@ -52,7 +46,5 @@ public interface GuiClient {
 	  * 
 	  * @param message
 	  */
-	 default void DebugMessage(String message){
-		 
-	 }
+	  void DebugMessage(String message);
 }
