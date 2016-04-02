@@ -1,23 +1,17 @@
 package UserInterface;
 
-import java.net.*;
-import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.text.DefaultHighlighter;
-import javax.swing.text.Highlighter;
-import javax.swing.text.Highlighter.HighlightPainter;
 
-public class ChatGui5 extends JFrame 
+public class ChatGui5 extends JFrame implements GuiClient
 {
     // GUI items
     private JLabel userLabel = new JLabel("Connected Users");
     private JButton sendButton;
-    private JButton connectButton;
-    private JTextField machineInfo;
-    private JTextField portInfo;
+    //private JButton connectButton;
+    //private JTextField machineInfo;
+    //private JTextField portInfo;
     private JTextField message;
     private JTextArea history;
     private JList users;
@@ -84,7 +78,7 @@ public class ChatGui5 extends JFrame
             }
         });
         
-        sendButton = new JButton("Send to all");
+        sendButton = new JButton("Send");
         sendButton.setEnabled(true);
         
         // We will set the "default button" to the send button, so whenever the user presses
@@ -101,54 +95,6 @@ public class ChatGui5 extends JFrame
         add(usersPanel, "West");
         add(chatPanel, "Center");
         
-        /*
-        Connector = new ConnectManager();
-        
-        // get content pane and set its layout
-        Container container = getContentPane();
-        container.setLayout(new BorderLayout());
-
-        // set up the North panel
-        JPanel upperPanel = new JPanel();
-        upperPanel.setLayout(new GridLayout(4, 2));
-        container.add(upperPanel, BorderLayout.NORTH);
-
-        // create buttons
-        // connected = false;
-
-        upperPanel.add(new JLabel("Message: ", JLabel.CENTER));
-        message = new JTextField("");
-        // message.addActionListener( this );
-        upperPanel.add(message);
-
-        sendButton = new JButton("Send Message");
-        // sendButton.addActionListener( this );
-        sendButton.setEnabled(true);
-        upperPanel.add(sendButton);
-
-        sendButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                boolean message_sent = Connector.SendMessage(message.getText());
-                message.setText("");
-            }
-        });
-
-        connectButton = new JButton("Connect to Server");
-        // connectButton.addActionListener( this );
-        upperPanel.add(connectButton);
-
-        // upperPanel.add ( new JLabel ("Server Address: ", JLabel.RIGHT) );
-        // machineInfo = new JTextField ("127.0.0.1");
-        // upperPanel.add( machineInfo );
-        //
-        // upperPanel.add ( new JLabel ("Server Port: ", JLabel.RIGHT) );
-        // portInfo = new JTextField ("");
-        // upperPanel.add( portInfo );
-
-        history = new JTextArea(10, 40);
-        history.setEditable(false);
-        container.add(new JScrollPane(history), BorderLayout.CENTER);
-        */
         
         setVisible(true);
     } // end CountDown constructor
