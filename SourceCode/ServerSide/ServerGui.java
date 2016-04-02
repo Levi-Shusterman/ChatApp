@@ -92,10 +92,10 @@ public class ServerGui extends JFrame{
 	         e.printStackTrace();
 	       }
 	       try{
-	        portInfo.setText("Listening on Port: " + serverSocket.getLocalPort());
-	        machineInfo.setText( InetAddress.getByName("localhost").toString());
+		        portInfo.setText("Listening on Port: " + serverSocket.getLocalPort());
+		        machineInfo.setText( InetAddress.getByName("localhost").toString());
 	       }catch(Exception e){
-	         e.printStackTrace();
+	    	   e.printStackTrace();
 	       }
 
 	   // index of each thread in

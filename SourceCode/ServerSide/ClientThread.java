@@ -113,8 +113,10 @@ public void run(){
 
  			   // Index is initialized
  			   if(outStreams.elementAt(i) != null){
+ 				  //TODO Don't resend messages to yourself 
+ 				   
  				   // To the socket object output stream of this thread, 
-				 // write the message   
+ 				   			// write the message   
 				   Vector<String> to_send = new Vector<String>();
 				   to_send.add(message);
 				   outStreams.elementAt(i).sendMessage(to_send);
