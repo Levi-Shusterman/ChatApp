@@ -162,12 +162,6 @@ public class ChatGui5 extends JFrame implements GuiClient
     }
 
 	@Override
-	public void EnteredChatRoom(Vector<String> friends) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void DisplayMessage(String message, String name) {
 		// TODO Auto-generated method stub
     	addMessage(message, name);

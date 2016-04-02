@@ -22,7 +22,7 @@ public interface GuiClient {
 	  * @param friends A vector of the people who are currently 
 	  * in the chat room
 	  */
-	 void EnteredChatRoom(Vector<String> friends);
+	 void addUser(String username);
 	 
 	 /**
 	  * Client calls this method when a message has been received.

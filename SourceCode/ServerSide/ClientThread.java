@@ -105,13 +105,21 @@ public void run(){
 		 	    * Received the name of this thread from client
 		 	    */
 		 	   if( key.equals("NAME")){
+		 		   // Assign the name to the thread
 		 		   String name = readin.elementAt(1);
 		 		   outStreams.elementAt(MyIndex).addName(name);
-		 		   
 		 		   MyName = name;
 		 		   
-		 		  Gui.history.insert("Receiving name from client:"
-		 				  + name + " " + MyIndex +"\n",0);
+		 		   Gui.history.insert("Receiving name from client:"
+		 				   + name + " " + MyIndex +"\n",0);
+		 		   Gui.history.insert("Sending name to all\n", 0);
+		 		   
+		 		  Vector<String> to_send = new Vector<String>();
+				  
+		 		  to_send.add("ADD USER");
+		 		  to_send.add(name);
+				   
+				   sendMessageToAll(to_send);
 		 		   
 		 	   }
 	 	   }catch(ArrayIndexOutOfBoundsException e){
