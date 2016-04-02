@@ -74,19 +74,11 @@ public class ChatGui5 extends JFrame implements GuiClient
         message = new JTextField(30);
         message.setFont(new Font("Arial", Font.PLAIN, 16));
         
-        // Make "Enter" the default key to send text to the chat
-        message.addKeyListener(new KeyAdapter(){
-            @Override
-            public void keyPressed(KeyEvent e){
-                if(e.getKeyCode() == KeyEvent.VK_ENTER && !message.getText().equals(""))
-                    addMessage(message.getText(), userName);
-                    boolean message_sent = Connector.SendMessage(message.getText() );
-		            message.setText("");
-            }
-        });
-        
+       
         sendButton = new JButton("Send");
         sendButton.setEnabled(true);
+        
+        // send message
         sendButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ev){
     	        if( message.getText()!=null && message.getText()!=""){
@@ -95,6 +87,16 @@ public class ChatGui5 extends JFrame implements GuiClient
     	        }
     	       }
             });
+        // send message by pressing enter
+        sendButton.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyPressed(KeyEvent e){
+                if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                    addMessage(message.getText(), userName);
+                    boolean message_sent = Connector.SendMessage(message.getText() );
+		            message.setText("");
+            }
+        });
         
         // We will set the "default button" to the send button, so whenever the user presses
         // enter, the message that is stored in the message field will be sent
