@@ -25,6 +25,7 @@ public interface GuiClient {
 	 default void EnteredChatRoom(Vector<String> friends){
 		
 	}
+	 
 	 /**
 	  * Client calls this method when a message has been received.
 	  * The gui is then to display it along with who sent it.

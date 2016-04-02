@@ -17,7 +17,7 @@ public interface Client {
 	 * Send a message to all users currently in the chat room
 	 * 
 	 * @param message
-	 * @return
+	 * @return True if sent correctly, false if not
 	 */
 	default boolean SendMessage(String message){
 		return false;
@@ -28,10 +28,9 @@ public interface Client {
 	 * 
 	 * @param message
 	 * @param to_whom
-	 * @return
+	 * @return True if sent correctly, false if not
 	 */
 	default boolean SendMessage(String message, Vector<String> to_whom){
 		return false;
 	}
-	
 }
