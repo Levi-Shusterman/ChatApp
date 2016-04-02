@@ -6,6 +6,8 @@ import java.util.Vector;
 
 import javax.swing.*;
 
+import ClientSide.ConnectManager;
+
 public class ChatGui5 extends JFrame implements GuiClient
 {
     // GUI items
@@ -21,6 +23,7 @@ public class ChatGui5 extends JFrame implements GuiClient
     private JPanel chatPanel;
     private JPanel bottomPanel;
     private String userName;
+	private ConnectManager Connector;
 
     // Network Items
     // boolean connected;
@@ -77,11 +80,21 @@ public class ChatGui5 extends JFrame implements GuiClient
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER && !message.getText().equals(""))
                     addMessage(message.getText(), userName);
+                    boolean message_sent = Connector.SendMessage(message.getText() );
+		            message.setText("");
             }
         });
         
         sendButton = new JButton("Send");
         sendButton.setEnabled(true);
+        sendButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ev){
+    	        if( message.getText()!=null && message.getText()!=""){
+    		          boolean message_sent = Connector.SendMessage(message.getText() );
+    		          message.setText("");
+    	        }
+    	       }
+            });
         
         // We will set the "default button" to the send button, so whenever the user presses
         // enter, the message that is stored in the message field will be sent
@@ -97,6 +110,8 @@ public class ChatGui5 extends JFrame implements GuiClient
         add(usersPanel, "West");
         add(chatPanel, "Center");
         
+        Connector = new ConnectManager(this);
+
         
         setVisible(true);
     } // end CountDown constructor
