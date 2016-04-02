@@ -63,6 +63,7 @@ public class ConnectManager implements Client{
              Out = new ObjectOutputStream(Sock.getOutputStream());
             In = new BufferedReader(new InputStreamReader( Sock.getInputStream()));
             Connected = true;
+            Gui.DisplayMessage("Successfuly connected to Chat Room", " ");
       } catch (NumberFormatException e) {
             Gui.DebugMessage( "Server Port must be an integer " + Port + " \n");
         } catch (UnknownHostException e) {
@@ -72,7 +73,6 @@ public class ConnectManager implements Client{
                                + "the connection to: " + IP_Address);
         }
         
-        Gui.DebugMessage("Successfuly connected: " + IP_Address + " " + Port);
         
         // Listen on messages from the server
         Thread listen = new Thread( new Receiver(Gui, Sock));

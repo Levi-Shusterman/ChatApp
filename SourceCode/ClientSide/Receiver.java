@@ -28,7 +28,13 @@ class Receiver implements Runnable {
 			Reader = new ObjectInputStream(sock.getInputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.print("Receiver : Constructor\n");
+			
+			Gui.DisplayMessage("Couldn't connect to server", " " ) ;
+			e.printStackTrace();
+		}catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			
+			Gui.DisplayMessage("Couldn't connect to server", " " ) ;
 			e.printStackTrace();
 		}
 	}

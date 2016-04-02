@@ -126,8 +126,6 @@ public void run(){
      */
   	private void updateClientWithUsers() {
 	// TODO Auto-generated method stub
-  		Vector<String> user = new Vector<String>();
-  		user.add("ADD USER");
   		
 		   for( int i = 0; i < outStreams.size(); i++){
 			   
@@ -136,10 +134,13 @@ public void run(){
 				   
 				   
 				   // Don't resend messages to yourself 
+				   Vector<String> user = new Vector<String>();
+				   user.add("ADD USER");
 				   String name_of_thread = outStreams.elementAt(i).Name; 
+				   user.add( name_of_thread); 
+
 				   if( !MyName.equals( name_of_thread )){
 					   
-	 				   user.add(1, name_of_thread); 
 					   outStreams.elementAt(MyIndex).sendMessage(user);
 				   }
 			   }
@@ -152,7 +153,7 @@ public void run(){
   	 * 
   	 * @param readin : The message from the client
   	 */
-	private synchronized void processMessage(Vector<String> readin ){
+	private void processMessage(Vector<String> readin ){
  	   String key = readin.elementAt(0);
  	   	   
  	   	   if( key.equals("EXIT")){
@@ -185,6 +186,7 @@ public void run(){
 	 	   }catch(ArrayIndexOutOfBoundsException e){
 	 		   Gui.history.insert("ERROR : Array index out of bounds in"+
 	 				   "Receiving name from client\n",0);
+	 		   e.printStackTrace();
 	 		   
 	 	   }catch(Exception e){
 	 		   e.printStackTrace();
