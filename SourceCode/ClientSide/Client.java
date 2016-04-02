@@ -36,4 +36,6 @@ public interface Client {
 	 * @return
 	 */
 	boolean SendName(String name);
+	
+	void ExitChat();
 }

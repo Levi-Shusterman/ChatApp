@@ -132,6 +132,23 @@ public boolean SendName(String name) {
       
       return true;
 }
+
+
+@Override
+public void ExitChat() {
+	// TODO Auto-generated method stub
+    Vector<String> out_message = new Vector<String>();
+    out_message.add("EXIT");
+	  
+	  try
+    {
+      Out.writeObject(out_message);
+    }
+    catch (Exception e) 
+    {
+      Gui.DebugMessage("Client: Error in closing ");
+    }
+}
   
  
 

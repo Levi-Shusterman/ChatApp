@@ -21,7 +21,7 @@ public class ChatGui5 extends JFrame implements GuiClient
     
     // Connecting to the server
     private String userName;
-	private ConnectManager Connector;
+	private static ConnectManager Connector;
     
 	// Represents list of users in the chat room
     private JList list;
@@ -154,6 +154,15 @@ public class ChatGui5 extends JFrame implements GuiClient
     public static void main(String args[]) {
 		String username = JOptionPane.showInputDialog(null, "Please enter your user name: ");
 		ChatGui5 application = new ChatGui5(username);
+	    
+		application.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+	      application.addWindowListener(new WindowAdapter() {
+	          @Override
+	          public void windowClosing(WindowEvent event) {
+	        	  Connector.ExitChat();
+	        	  System.exit(0);
+	          }
+	      });
     }
     
     @Override
