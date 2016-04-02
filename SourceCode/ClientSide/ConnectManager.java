@@ -89,6 +89,7 @@ public class ConnectManager implements Client{
   @Override
   public boolean SendMessage(String message){
       Vector<String> out_message = new Vector<String>();
+      out_message.add("ALL");
       out_message.add(message);
 	  
 	  try

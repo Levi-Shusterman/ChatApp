@@ -86,7 +86,7 @@ public class ServerGui extends JFrame{
 	         serverSocket = new ServerSocket(9090, 0, InetAddress.getByName("localhost"));      
 	         serverSocket.setReuseAddress(true);
 	         portInfo.setText("9090");
-		        history.insert("Connection Socket Created",0);
+		        history.insert("Connection Socket Created\n",0);
 	       }catch( IOException e){
 	         history.insert( "Error connecting\n", 0);
 	         e.printStackTrace();

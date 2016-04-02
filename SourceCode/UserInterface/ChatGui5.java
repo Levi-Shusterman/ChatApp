@@ -113,6 +113,7 @@ public class ChatGui5 extends JFrame implements GuiClient
         add(chatPanel, "Center");
         
         Connector = new ConnectManager(this);
+        Connector.SendName(userName);
 
         
         setVisible(true);
