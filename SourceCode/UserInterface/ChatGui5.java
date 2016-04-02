@@ -2,6 +2,7 @@ package UserInterface;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Vector;
 import javax.swing.*;
 
 public class ChatGui5 extends JFrame implements GuiClient
@@ -9,26 +10,16 @@ public class ChatGui5 extends JFrame implements GuiClient
     // GUI items
     private JLabel userLabel = new JLabel("Connected Users");
     private JButton sendButton;
-    private JButton addToChatButton;
-    //private JButton connectButton;
-    //private JTextField machineInfo;
-    //private JTextField portInfo;
     private JTextField message;
     private JTextArea history;
-    private JList users;
     private JPanel usersPanel;
+    private JPanel buttonsPanel;
     private JPanel chatPanel;
     private JPanel bottomPanel;
     private String username;
-
-    // Network Items
-    // boolean connected;
-    // Socket echoSocket;
-    // PrintWriter out;
-    // BufferedReader in;
-
-    //private ConnectManager Connector;
-
+    private Vector<JCheckBox> userCheckButtonsList;
+    private Vector<Boolean> chattingTo;
+    
     // set up GUI
     public ChatGui5(String username) {
         super("Echo Client");
@@ -39,19 +30,26 @@ public class ChatGui5 extends JFrame implements GuiClient
         setLayout(new BorderLayout());
         this.username = username;
         
+        
         // The users panel will contain a list of users to the left side
         usersPanel = new JPanel();
         usersPanel.setLayout(new BorderLayout());
-        users = new JList(new String[]{username, "Nigel", "Levi", "Mike"});
-        users.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        users.setLayoutOrientation(JList.VERTICAL);
-        users.setVisibleRowCount(-1);
         
-        addToChatButton = new JButton("Add to Chat");
+        userCheckButtonsList = new Vector<JCheckBox>();
+        addUser("Nigel");
+        addUser("Levi");
+        addUser("Mike");
+        
+        buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.PAGE_AXIS));
+        buttonsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        
+        for(JCheckBox user : userCheckButtonsList)
+            buttonsPanel.add(user);
         
         usersPanel.add(userLabel, "North");
-        usersPanel.add(users, "Center");
-        usersPanel.add(addToChatButton, "South");
+        usersPanel.add(buttonsPanel, "Center");
         
         // The message field and text area will be enclosed in the chat panel
         chatPanel = new JPanel();
@@ -103,7 +101,8 @@ public class ChatGui5 extends JFrame implements GuiClient
 
     public void addUser(String username)
     {
-        //users.append(username + "\n");
+        JCheckBox newUser = new JCheckBox(username);
+        newUser.setSelected(true);
     }
     
     public void addMessage(String message)
