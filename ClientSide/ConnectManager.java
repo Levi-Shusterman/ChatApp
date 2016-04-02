@@ -1,9 +1,13 @@
+package ClientSide;
 import java.net.*;
 import java.util.Vector;
 import java.io.*; 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import ChatGui;
+import Client;
 
 /**
  * The Gui instantiates this class to be able to connect to the server

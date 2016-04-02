@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import ClientSide.ConnectManager;
+
 public class ChatGui extends JFrame 
 {  
   // GUI items
@@ -52,9 +54,11 @@ public class ChatGui extends JFrame
       
       sendButton.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent ev){
-          boolean message_sent = Connector.SendMessage(message.getText() );
-          message.setText("");
-        }
+	        if( message.getText()!=null && message.getText()!=""){
+		          boolean message_sent = Connector.SendMessage(message.getText() );
+		          message.setText("");
+	        }
+	       }
         });
 
       connectButton = new JButton( "Connect to Server" );
