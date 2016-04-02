@@ -9,6 +9,7 @@ public class ChatGui5 extends JFrame implements GuiClient
     // GUI items
     private JLabel userLabel = new JLabel("Connected Users");
     private JButton sendButton;
+    private JButton addToChatButton;
     //private JButton connectButton;
     //private JTextField machineInfo;
     //private JTextField portInfo;
@@ -41,15 +42,16 @@ public class ChatGui5 extends JFrame implements GuiClient
         // The users panel will contain a list of users to the left side
         usersPanel = new JPanel();
         usersPanel.setLayout(new BorderLayout());
-        users = new JList(new String[]{"Nigel", "Levi", "Mike"});
+        users = new JList(new String[]{username, "Nigel", "Levi", "Mike"});
         users.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         users.setLayoutOrientation(JList.VERTICAL);
         users.setVisibleRowCount(-1);
         
-        //addUser(username);
+        addToChatButton = new JButton("Add to Chat");
         
         usersPanel.add(userLabel, "North");
         usersPanel.add(users, "Center");
+        usersPanel.add(addToChatButton, "South");
         
         // The message field and text area will be enclosed in the chat panel
         chatPanel = new JPanel();
@@ -112,7 +114,6 @@ public class ChatGui5 extends JFrame implements GuiClient
  
     public static void main(String args[]) {
 		String username = JOptionPane.showInputDialog(null, "Please enter your user name: ");
-        ChatGui5 application = new ChatGui5(username);
-        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ChatGui5 application = new ChatGui5(username);
     }
 }
