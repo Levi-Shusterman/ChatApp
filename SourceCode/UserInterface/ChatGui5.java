@@ -17,6 +17,7 @@ public class ChatGui5 extends JFrame implements GuiClient
     private JPanel chatPanel;
     private JPanel bottomPanel;
     private String username;
+    private JCheckBox allButton;
     private Vector<JCheckBox> userCheckButtonsList;
     private Vector<Boolean> chattingTo;
     
@@ -30,15 +31,26 @@ public class ChatGui5 extends JFrame implements GuiClient
         setLayout(new BorderLayout());
         this.username = username;
         
-        
         // The users panel will contain a list of users to the left side
         usersPanel = new JPanel();
         usersPanel.setLayout(new BorderLayout());
         
         userCheckButtonsList = new Vector<JCheckBox>();
+        
         addUser("Nigel");
         addUser("Levi");
         addUser("Mike");
+        
+        allButton = new JCheckBox("all");
+        allButton.addActionListener(ae ->{
+            for(JCheckBox box : userCheckButtonsList)
+                if(box.isSelected()) 
+                    box.setEnabled(true);
+                else 
+                    box.setEnabled(false);
+        });
+        
+        userCheckButtonsList.add(allButton);
         
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.PAGE_AXIS));
@@ -89,7 +101,6 @@ public class ChatGui5 extends JFrame implements GuiClient
         bottomPanel.add(sendButton);        
         
         chatPanel.add(bottomPanel, "South");
-        
 
         // Now add all of the panels into the whole frame
         add(usersPanel, "West");
@@ -103,11 +114,22 @@ public class ChatGui5 extends JFrame implements GuiClient
     {
         JCheckBox newUser = new JCheckBox(username);
         newUser.setSelected(true);
+        userCheckButtonsList.add(newUser);
+        
     }
     
     public void addMessage(String message)
     {
-        history.append("<" + username  + "> " + message + "\n");
+        history.append("<" + username  + " to: ");
+        
+        for(JCheckBox box : userCheckButtonsList)
+        {
+            if(box.isSelected())
+                history.append(box.getText() + " ");
+        }
+        
+        history.append(" > " + message + "\n");
+        
         this.message.setText("");
     }
  
