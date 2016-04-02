@@ -81,7 +81,9 @@ class ClientThread implements Runnable{
 public void run(){
 	  Vector<String> readin = new Vector<String>();
      Gui.history.insert("New Communication Thread Started\n",0);
-
+     
+     //updateClientWithUsers();
+     
        try {
            while ((readin = (Vector<String>) Reader.readObject()) != null) {
         	   
@@ -91,8 +93,38 @@ public void run(){
         } catch(Exception ex) {ex.printStackTrace();}
   }
 
+    
+    /**
+     * When a new client logs in, update him
+     * with who is in the chat room
+     * 
+     * This method will be called when the server 
+     * receives the name of this client thread
+     */
+  	private void updateClientWithUsers() {
+	// TODO Auto-generated method stub
+  		Vector<String> user = new Vector<String>();
+  		user.add("ADD USER");
+  		
+		   for( int i = 0; i < outStreams.size(); i++){
+			   
+			   // Index is initialized
+			   if(outStreams.elementAt(i) != null){
+				   
+				   
+				   // Don't resend messages to yourself 
+				   String name_of_thread = outStreams.elementAt(i).Name; 
+				   if( !MyName.equals( name_of_thread )){
+					   
+	 				   user.add(1, name_of_thread); 
+					   outStreams.elementAt(MyIndex).sendMessage(user);
+				   }
+			   }
+		   }
+  	}
 
-  	/**
+
+	/**
   	 * Process a message from the client and decide how to respond to it
   	 * 
   	 * @param readin : The message from the client
@@ -103,6 +135,7 @@ public void run(){
 	 	   try{
 		 	   /**
 		 	    * Received the name of this thread from client
+		 	    * Resend it to all users
 		 	    */
 		 	   if( key.equals("NAME")){
 		 		   // Assign the name to the thread
@@ -120,6 +153,7 @@ public void run(){
 		 		  to_send.add(name);
 				   
 				   sendMessageToAll(to_send);
+				   updateClientWithUsers();
 		 		   
 		 	   }
 	 	   }catch(ArrayIndexOutOfBoundsException e){
