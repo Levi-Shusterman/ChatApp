@@ -86,6 +86,7 @@ public class ConnectManager implements Client{
    * Send a messsage to all users
    * */
   @SuppressWarnings("null")
+  @Override
   public boolean SendMessage(String message){
       Vector<String> out_message = new Vector<String>();
       out_message.add(message);
@@ -106,23 +107,31 @@ public class ConnectManager implements Client{
   /**
    * Send a message to the users specified in the users[] array
    * */
+  @Override
   public boolean SendMessage( String message, Vector<String>to_whom){
     return false;
   }
+
+
+@Override
+public boolean SendName(String name) {
+	  Vector<String> out_message = new Vector<String>();
+      out_message.add("NAME");
+	  out_message.add(name);
+	  
+	  try
+      {
+        Out.writeObject(out_message);
+      }
+      catch (Exception e) 
+      {
+        Gui.DebugMessage("Client: Error in sending name to server");
+        return false;
+      }
+      
+      return true;
+}
   
-  /**
-   * Terminate the connection
-   * */
-  public boolean CloseConnection(){
-    return false;
-  }
-  
-  
-  /**
-   * Gui Interface
-   * 
-   * The name of the display field
-   * should be history
-   */
-   
+ 
+
 }

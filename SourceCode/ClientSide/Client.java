@@ -19,10 +19,7 @@ public interface Client {
 	 * @param message
 	 * @return True if sent correctly, false if not
 	 */
-	default boolean SendMessage(String message){
-		return false;
-	}
-	
+	boolean SendMessage(String message);
 	/**
 	 * Send a message to specified users in the chat room
 	 * 
@@ -30,7 +27,13 @@ public interface Client {
 	 * @param to_whom
 	 * @return True if sent correctly, false if not
 	 */
-	default boolean SendMessage(String message, Vector<String> to_whom){
-		return false;
-	}
+	boolean SendMessage(String message, Vector<String> to_whom);
+	
+	/**
+	 * Send the name of the user to the server upon startup
+	 * 
+	 * @param name
+	 * @return
+	 */
+	boolean SendName(String name);
 }

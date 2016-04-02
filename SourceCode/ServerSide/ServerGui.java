@@ -117,6 +117,6 @@ public class ServerGui extends JFrame{
 	    	 history.insert("Failed to accept a new connection\n", 0);
 	        }
 	   }
-     }l
+     }
 }
    
