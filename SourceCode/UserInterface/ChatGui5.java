@@ -1,3 +1,5 @@
+package UserInterface;
+
 import java.net.*;
 import java.io.*;
 import java.awt.*;
@@ -30,10 +32,10 @@ public class ChatGui5 extends JFrame
     // PrintWriter out;
     // BufferedReader in;
 
-    ConnectManager Connector;
+    //private ConnectManager Connector;
 
     // set up GUI
-    public ChatGui(String username) {
+    public ChatGui5(String username) {
         super("Echo Client");
         
         setSize(800, 600);
@@ -162,7 +164,8 @@ public class ChatGui5 extends JFrame
     }
  
     public static void main(String args[]) {
-        ChatGui application = new ChatGui("Nigel");
+		String username = JOptionPane.showInputDialog(null, "Please enter your user name: ");
+        ChatGui5 application = new ChatGui5("Nigel");
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
