@@ -3,7 +3,6 @@ package UserInterface;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
-
 import javax.swing.*;
 
 import ClientSide.ConnectManager;
@@ -13,13 +12,10 @@ public class ChatGui5 extends JFrame implements GuiClient
     // GUI items
     private JLabel userLabel = new JLabel("Connected Users");
     private JButton sendButton;
-    //private JButton connectButton;
-    //private JTextField machineInfo;
-    //private JTextField portInfo;
     private JTextField message;
     private JTextArea history;
-    private JList users;
     private JPanel usersPanel;
+    private JPanel buttonsPanel;
     private JPanel chatPanel;
     private JPanel bottomPanel;
     private String userName;
@@ -33,6 +29,11 @@ public class ChatGui5 extends JFrame implements GuiClient
 
     //private ConnectManager Connector;
 
+    private String username;
+    private JCheckBox allButton;
+    private Vector<JCheckBox> userCheckButtonsList;
+    private Vector<Boolean> chattingTo;
+    
     // set up GUI
     public ChatGui5(String username) {
         super("Echo Client");
@@ -46,15 +47,34 @@ public class ChatGui5 extends JFrame implements GuiClient
         // The users panel will contain a list of users to the left side
         usersPanel = new JPanel();
         usersPanel.setLayout(new BorderLayout());
-        users = new JList(new String[]{"Nigel", "Levi", "Mike"});
-        users.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        users.setLayoutOrientation(JList.VERTICAL);
-        users.setVisibleRowCount(-1);
         
-        //addUser(username);
+        userCheckButtonsList = new Vector<JCheckBox>();
+        
+        addUser("Nigel");
+        addUser("Levi");
+        addUser("Mike");
+        
+        allButton = new JCheckBox("all");
+        allButton.addActionListener(ae ->{
+            for(JCheckBox box : userCheckButtonsList)
+                if(box.isSelected()) 
+                    box.setEnabled(true);
+                else 
+                    box.setEnabled(false);
+        });
+        
+        userCheckButtonsList.add(allButton);
+        
+        buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.PAGE_AXIS));
+        buttonsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        
+        for(JCheckBox user : userCheckButtonsList)
+            buttonsPanel.add(user);
         
         usersPanel.add(userLabel, "North");
-        usersPanel.add(users, "Center");
+        usersPanel.add(buttonsPanel, "Center");
         
         // The message field and text area will be enclosed in the chat panel
         chatPanel = new JPanel();
@@ -106,7 +126,6 @@ public class ChatGui5 extends JFrame implements GuiClient
         bottomPanel.add(sendButton);        
         
         chatPanel.add(bottomPanel, "South");
-        
 
         // Now add all of the panels into the whole frame
         add(usersPanel, "West");
@@ -121,19 +140,30 @@ public class ChatGui5 extends JFrame implements GuiClient
 
     public void addUser(String username)
     {
-        //users.append(username + "\n");
+        JCheckBox newUser = new JCheckBox(username);
+        newUser.setSelected(true);
+        userCheckButtonsList.add(newUser);
+        
     }
     
     public void addMessage(String message, String username)
     {
-        history.append("<" + username  + "> " + message + "\n");
+        history.append("<" + username  + " to: ");
+        
+        for(JCheckBox box : userCheckButtonsList)
+        {
+            if(box.isSelected())
+                history.append(box.getText() + " ");
+        }
+        
+        history.append(" > " + message + "\n");
+        
         this.message.setText("");
     }
  
     public static void main(String args[]) {
 		String username = JOptionPane.showInputDialog(null, "Please enter your user name: ");
-        ChatGui5 application = new ChatGui5(username);
-        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ChatGui5 application = new ChatGui5(username);
     }
     
     @Override
