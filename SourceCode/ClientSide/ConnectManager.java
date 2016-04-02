@@ -6,8 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import ChatGui;
-import Client;
+import UserInterface.ChatGui;
 
 /**
  * The Gui instantiates this class to be able to connect to the server
@@ -39,7 +38,7 @@ import Client;
  * elements specify to whom it should be sent.
  *
  */
-class ConnectManager implements Client{
+public class ConnectManager implements Client{
   
   // connection info
    private Integer Port = 9090;

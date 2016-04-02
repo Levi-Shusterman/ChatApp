@@ -5,7 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
 
-import ChatGui;
+import UserInterface.ChatGui;
 
 /**
    * 

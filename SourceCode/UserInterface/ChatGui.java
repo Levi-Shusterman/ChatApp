@@ -1,8 +1,12 @@
+package UserInterface;
+
 import java.net.*; 
+
 import java.io.*; 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 
 import ClientSide.ConnectManager;
 
@@ -14,7 +18,7 @@ public class ChatGui extends JFrame
   JTextField machineInfo;
   JTextField portInfo;
   JTextField message;
-  JTextArea history;
+  public JTextArea history;
 
   // Network Items
 //  boolean connected;
