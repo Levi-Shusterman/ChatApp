@@ -113,11 +113,9 @@ public class ChatGui5 extends JFrame implements GuiClient
         add(usersPanel, "West");
         add(chatPanel, "Center");
         
-//        Connector = new ConnectManager(this);
-//        Connector.SendName(userName);
-        
-        addUser("Jane"); addUser("Mike"); removeUser("Jane");
-        
+        Connector = new ConnectManager(this);
+        Connector.SendName(userName);
+                
         setVisible(true);
     } // end CountDown constructor
     
@@ -148,7 +146,7 @@ public class ChatGui5 extends JFrame implements GuiClient
 //                history.append(box.getText() + " ");
 //        }
 //        
-//        history.append(" > " + message + "\n");
+        history.append(" > " + message + "\n");
 //        
         this.message.setText("");
     }

@@ -130,24 +130,29 @@ public void run(){
 		   if( key.equals("ALL")){
 			   Gui.history.insert("Sending message to all\n",0);
 			   
-			   for( int i = 0; i < outStreams.size(); i++){
+			   Vector<String> to_send = new Vector<String>();
+			   String message = readin.elementAt(1);
+			   to_send.add(message);
+			   
+			   sendMessageToAll(to_send);
+	 	   }		
+	}
+	
+	private void sendMessageToAll( Vector<String> message){
+		   for( int i = 0; i < outStreams.size(); i++){
+			   
+			   // Index is initialized
+			   if(outStreams.elementAt(i) != null){
 				   
-				   // Index is initialized
-				   if(outStreams.elementAt(i) != null){
+				   // Don't resend messages to yourself 
+				   String name_of_thread = outStreams.elementAt(i).Name; 
+				   if( !MyName.equals( name_of_thread )){
 					   
-					   // Don't resend messages to yourself 
-					   String name_of_thread = outStreams.elementAt(i).Name; 
-					   if( !MyName.equals( name_of_thread )){
-						   
-	//	 				   // To the socket object output stream of this thread, 
-	//	 				   			// write the message   
-						   Vector<String> to_send = new Vector<String>();
-						   String message = readin.elementAt(1);
-						   to_send.add(message);
-						   outStreams.elementAt(i).sendMessage(to_send);
-					   }
+	 				   // To the socket object output stream of this thread, 
+	 				   			// write the message   
+					   outStreams.elementAt(i).sendMessage(message);
 				   }
 			   }
-	 	   }		
+		   }
 	}
 }
