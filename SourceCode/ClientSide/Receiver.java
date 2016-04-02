@@ -32,6 +32,7 @@ class Receiver implements Runnable {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		Vector<String> readin;

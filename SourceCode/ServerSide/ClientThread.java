@@ -97,6 +97,7 @@ public void run(){
   	 */
 	private void processMessage(Vector<String> readin ){
  	   String message = readin.elementAt(0);
+
 		
  	   if( readin.size()>=1){
  		   Gui.history.insert( readin.get(0), 0 );
@@ -112,16 +113,11 @@ public void run(){
 
  			   // Index is initialized
  			   if(outStreams.elementAt(i) != null){
- 				   try {
- 					   
- 					// To the socket object output stream of this thread, 
- 					 // write the message   
-					outStreams.elementAt(i).outStream.writeObject(message);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+ 				   // To the socket object output stream of this thread, 
+				 // write the message   
+				   Vector<String> to_send = new Vector<String>();
+				   to_send.add(message);
+				   outStreams.elementAt(i).sendMessage(to_send);
  			   }
  		   }
  	   }
