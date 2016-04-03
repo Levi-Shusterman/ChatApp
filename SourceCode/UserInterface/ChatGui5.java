@@ -19,7 +19,6 @@ public class ChatGui5 extends JFrame implements GuiClient
     private String username;
     private JCheckBox allButton;
     private Vector<JCheckBox> userCheckButtonsList;
-    private Vector<Boolean> chattingTo;
     
     // set up GUI
     public ChatGui5(String username) {
@@ -86,12 +85,21 @@ public class ChatGui5 extends JFrame implements GuiClient
             @Override
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER && !message.getText().equals(""))
-                    addMessage(message.getText());
+                    if(atLeastOneButtonSelected())
+                        addMessage(message.getText());
             }
         });
         
         sendButton = new JButton("Send");
         sendButton.setEnabled(true);
+        sendButton.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e)
+            {
+                if((!message.getText().equals("")) && atLeastOneButtonSelected())
+                    addMessage(message.getText());
+            }
+        });
         
         // We will set the "default button" to the send button, so whenever the user presses
         // enter, the message that is stored in the message field will be sent
@@ -131,6 +139,17 @@ public class ChatGui5 extends JFrame implements GuiClient
         history.append(" > " + message + "\n");
         
         this.message.setText("");
+    }
+    
+    private boolean atLeastOneButtonSelected()
+    {
+        for(JCheckBox box: userCheckButtonsList)
+        {
+            if(box.isSelected())
+                return true;
+        }
+        
+        return false;
     }
  
     public static void main(String args[]) {
