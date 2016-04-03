@@ -35,18 +35,19 @@ public class ChatGui5 extends JFrame implements GuiClient
         usersPanel.setLayout(new BorderLayout());
         
         userCheckButtonsList = new Vector<JCheckBox>();
-        
+        addUser(username);
         addUser("Nigel");
         addUser("Levi");
         addUser("Mike");
         
         allButton = new JCheckBox("all");
+        allButton.setSelected(true);
         allButton.addActionListener(ae ->{
             for(JCheckBox box : userCheckButtonsList)
-                if(box.isSelected()) 
-                    box.setEnabled(true);
+                if(allButton.isSelected()) 
+                    box.setSelected(true);
                 else 
-                    box.setEnabled(false);
+                    box.setSelected(false);
         });
         
         buttonsPanel = new JPanel();
@@ -114,26 +115,55 @@ public class ChatGui5 extends JFrame implements GuiClient
         add(usersPanel, "West");
         add(chatPanel, "Center");
         
+        //leaveChatRoom("Levi");
         
         setVisible(true);
     } // end CountDown constructor
 
+    /*
+     * Add a user to the chatroom by adding them to the list of checkboxes
+     * 
+     */
     public void addUser(String username)
     {
         JCheckBox newUser = new JCheckBox(username);
-        newUser.setSelected(true);
+        
+        if(this.username.equals(username))
+        {
+            newUser.setEnabled(false);
+            newUser.setEnabled(true);
+        }
+        else
+            newUser.setSelected(true);
+        
         userCheckButtonsList.add(newUser);
         
     }
     
+    /*
+     * Send a message to the history text area by showing the user who sent the message along
+     * with data concerning who the message is addressed to 
+     */
     public void addMessage(String message)
     {
         history.append("<" + username  + " to: ");
         
-        for(JCheckBox box : userCheckButtonsList)
+        if(allButton.isSelected())
         {
-            if(box.isSelected())
-                history.append(box.getText() + " ");
+            // If the message is addressed to everyone, then we will broadcast
+            // the message to everyone
+            history.append(" all ");
+        }
+        else
+        {
+            // Otherwise we shall send it to everyone in the list of checkboxes 
+            // that are checked
+            for(JCheckBox box : userCheckButtonsList)
+            {
+                if(box.isSelected())
+                    history.append(box.getText() + " ");
+            }
+                
         }
         
         history.append(" > " + message + "\n");
@@ -141,6 +171,10 @@ public class ChatGui5 extends JFrame implements GuiClient
         this.message.setText("");
     }
     
+    /*
+     * Check that at least one button in the vector of check buttons is selected 
+     * 
+     */
     private boolean atLeastOneButtonSelected()
     {
         for(JCheckBox box: userCheckButtonsList)
@@ -150,6 +184,23 @@ public class ChatGui5 extends JFrame implements GuiClient
         }
         
         return false;
+    }
+    
+    /*
+     * When a user leaves the chat room, we will remove him from the vector containing all of the 
+     * connected users as well as the list of check boxes
+     */
+    public void leaveChatRoom(String username)
+    {
+        for(JCheckBox box : userCheckButtonsList)
+        {
+            if(box.getText().equals(username))
+            {
+                buttonsPanel.remove(box);
+            }
+        }
+        
+        userCheckButtonsList.remove(username);        
     }
  
     public static void main(String args[]) {
