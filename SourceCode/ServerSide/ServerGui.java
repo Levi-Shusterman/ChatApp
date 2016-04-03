@@ -70,8 +70,13 @@ public class ServerGui extends JFrame{
      public static void main( String args[] )
    { 
       ServerGui application = new ServerGui();
-      application.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-   }
+		application.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+	      application.addWindowListener(new WindowAdapter() {
+	          @Override
+	          public void windowClosing(WindowEvent event) {
+	        	  System.exit(0);
+	          }
+	      });   }
      
      /**
       * Starts a connection on a socket

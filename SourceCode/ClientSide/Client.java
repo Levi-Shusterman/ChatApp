@@ -20,7 +20,8 @@ public interface Client {
 	 * @return True if sent correctly, false if not
 	 */
 	boolean SendMessage(String message);
-	/**
+	
+	/**TODO
 	 * Send a message to specified users in the chat room
 	 * 
 	 * @param message
@@ -36,6 +37,7 @@ public interface Client {
 	 * @return
 	 */
 	boolean SendName(String name);
+	
 	
 	void ExitChat();
 }

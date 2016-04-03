@@ -7,38 +7,23 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import UserInterface.ChatGui;
-import UserInterface.ChatGui5;
+import UserInterface.ChatGui;
 
 /**
  * The Gui instantiates this class to be able to connect to the server
  * 
- * @author Levi Shusterman
- * 	working with Nigel Flower
+ * Connect to the Server, send 
+ * and receive messages from it.
  * 
  * 	CS 342 Software Design 
  *  With Professor Troy at UIC
  * 
- * Connect to the Server, send 
- * and receive messages from it.
+ * @author Levi Shusterman
+ * 	working with Nigel Flower
+ * 
+ * 
  * */
 
-/**
- * Messaging Protocol
- * 
- * Vector<String> passed between Server
- * and Client. 
- * 
- * Sending:
- * 
- * First element is the message itself. 
- * 
- * If the size is one, it is meant for
- * everyone in the chat.
- * 
- * If the size is not one, the remaining 
- * elements specify to whom it should be sent.
- *
- */
 public class ConnectManager implements Client{
   
   // connection info
@@ -50,13 +35,13 @@ public class ConnectManager implements Client{
    ObjectOutputStream Out;
    BufferedReader In;
    private Socket Sock;
-   private ChatGui5 Gui;
+   private ChatGui Gui;
   
   
   /**
    * Construct a connection the server at IP_Address + Port
    * */
-  public ConnectManager(ChatGui5 gui){
+  public ConnectManager(ChatGui gui){
 	  Gui = gui;
     try{
             Sock = new Socket(IP_Address, Port );       
@@ -75,9 +60,8 @@ public class ConnectManager implements Client{
         
         
         // Listen on messages from the server
-        Thread listen = new Thread( new Receiver(Gui, Sock));
+        Thread listen = new Thread( new Receiver(Gui, Sock) );
         listen.start();
-            
   }
   
   
@@ -111,7 +95,8 @@ public class ConnectManager implements Client{
    * */
   @Override
   public boolean SendMessage( String message, Vector<String>to_whom){
-    return false;
+    //TODO
+	  return false;
   }
 
 
