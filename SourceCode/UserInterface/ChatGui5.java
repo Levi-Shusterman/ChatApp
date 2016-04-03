@@ -50,8 +50,6 @@ public class ChatGui5 extends JFrame implements GuiClient
                     box.setEnabled(false);
         });
         
-        userCheckButtonsList.add(allButton);
-        
         buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.PAGE_AXIS));
         buttonsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -59,6 +57,8 @@ public class ChatGui5 extends JFrame implements GuiClient
         
         for(JCheckBox user : userCheckButtonsList)
             buttonsPanel.add(user);
+        
+        buttonsPanel.add(allButton);
         
         usersPanel.add(userLabel, "North");
         usersPanel.add(buttonsPanel, "Center");
