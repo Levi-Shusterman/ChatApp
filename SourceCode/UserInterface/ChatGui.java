@@ -109,12 +109,12 @@ public class ChatGui extends JFrame implements GuiClient
                     if( String.valueOf(ToSend.getSelectedItem()).equals("All")){
 	  		          boolean message_sent = Connector.SendMessage(message.getText() );
 	  		          message.setText("");
-	  		          addMessage(message.getText(), userName);
+//	  		          addMessage(message.getText(), userName);
 	  	        	}else{
 	  	        		 boolean message_sent = Connector.SendMessage(message.getText(),
 	  	        			  String.valueOf(ToSend.getSelectedItem()) );
 	    		          message.setText("");
-		  		          addMessage(message.getText(), userName + " to " +   ToSend.getSelectedItem());
+//		  		          addMessage(message.getText(), userName + " to " +   ToSend.getSelectedItem());
 
 	  	        	}
             }

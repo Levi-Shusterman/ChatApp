@@ -47,6 +47,7 @@ class ClientThread implements Runnable{
   boolean ClientConnected;
   
   // Refers to threads
+  //TODO Synchronize this data structure
   Vector<ThreadIdentifier> outStreams;
   
   // My index in outStreams vector
