@@ -18,9 +18,22 @@ public class ServerGui extends JFrame{
   // Network Items
   boolean serverContinue;
   ServerSocket serverSocket;
+  
+  // IP + Port
+  String machineAddress;
+  int Port = 9090;
 
   // set up GUI
-   public ServerGui()
+   /**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
+public ServerGui()
    {
       super( "Echo Server" );
 
@@ -38,18 +51,16 @@ public class ServerGui extends JFrame{
           });
       container.add( ssButton );
       
-
-      String machineAddress = null;
       try
       {  
-        InetAddress addr = InetAddress.getLocalHost();
-       machineAddress = "127.0.0.1" ;
-//        machineAddress = addr.getHostAddress();
+        InetAddress IP = InetAddress.getLocalHost();
+        machineAddress = IP.getHostAddress().toString();
+        System.out.println( machineAddress +"\n" );
       }
       
       catch (UnknownHostException e)
       {
-        machineAddress = "127.0.0.1";
+        history.insert("Issue getting the IP address of this machine",0);
       }
       
       machineInfo = new JLabel (machineAddress);
@@ -88,9 +99,9 @@ public class ServerGui extends JFrame{
     	   	= new Vector<ThreadIdentifier>();
     	       	   
 	       try{
-	         serverSocket = new ServerSocket(9090, 0, InetAddress.getByName("localhost"));      
+	         serverSocket = new ServerSocket(Port, 0, InetAddress.getLocalHost());      
 	         serverSocket.setReuseAddress(true);
-	         portInfo.setText("9090");
+	         portInfo.setText(Integer.toString(Port));
 		        history.insert("Connection Socket Created\n",0);
 	       }catch( IOException e){
 	         history.insert( "Error connecting\n", 0);
@@ -98,7 +109,7 @@ public class ServerGui extends JFrame{
 	       }
 	       try{
 		        portInfo.setText("Listening on Port: " + serverSocket.getLocalPort());
-		        machineInfo.setText( InetAddress.getByName("localhost").toString());
+		        machineInfo.setText( machineAddress);
 	       }catch(Exception e){
 	    	   e.printStackTrace();
 	       }
