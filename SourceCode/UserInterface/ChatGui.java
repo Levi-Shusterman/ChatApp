@@ -22,6 +22,8 @@ public class ChatGui extends JFrame implements GuiClient
     // Connecting to the server
     private String userName;
 	private static ConnectManager Connector;
+	
+	private JComboBox<String> ToSend;
     
 	// Represents list of users in the chat room
     private JList list;
@@ -105,7 +107,12 @@ public class ChatGui extends JFrame implements GuiClient
         getRootPane().setDefaultButton(sendButton);
               
         bottomPanel.add(message);
-        bottomPanel.add(sendButton);        
+        bottomPanel.add(sendButton); 
+        
+        ToSend = new JComboBox<String>();
+        bottomPanel.add(ToSend);
+        ToSend.addItem("All");
+        
         
         chatPanel.add(bottomPanel, "South");
 
@@ -127,11 +134,13 @@ public class ChatGui extends JFrame implements GuiClient
 	public void addUser(String username)
     {
     	userList.addElement(username);
+    	ToSend.addItem(username);
     }
     
     @SuppressWarnings("unchecked")
 	public void removeUser( String username){
     	userList.removeElement(username);
+    	ToSend.removeItem(username);
     }
     
     
@@ -176,6 +185,8 @@ public class ChatGui extends JFrame implements GuiClient
 	@Override
 	public void ChatRoomTerminated() {
 		// TODO Auto-generated method stub
+		Connector.ExitChat();
+  	  	System.exit(0);
 		
 	}
 }
