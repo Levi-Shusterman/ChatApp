@@ -85,16 +85,18 @@ public class ChatGui extends JFrame implements GuiClient
         // send message
         sendButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ev){
-    	        if( message.getText()!=null && message.getText()!=""){
+    	        if( message.getText()!=null && message.getText()!=""
+    	        		&&message.getText()!= ""){
+    	        	
     	        	if( String.valueOf(ToSend.getSelectedItem()).equals("All")){
     		          boolean message_sent = Connector.SendMessage(message.getText() );
     		          message.setText("");
-	  		          addMessage(message.getText(), userName);
+	  		          //addMessage(message.getText(), userName);
     	        	}else{
     	        	  boolean message_sent = Connector.SendMessage(message.getText(),
     	        			  String.valueOf(ToSend.getSelectedItem()) );
       		          message.setText("");
-	  		          addMessage(message.getText(), userName + " to " +   ToSend.getSelectedItem());
+	  		          //addMessage(message.getText(), userName + " to " +   ToSend.getSelectedItem());
     	        	}
     	        }
     	       }
@@ -105,18 +107,22 @@ public class ChatGui extends JFrame implements GuiClient
             @Override
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER)
-	                
-                    if( String.valueOf(ToSend.getSelectedItem()).equals("All")){
-	  		          boolean message_sent = Connector.SendMessage(message.getText() );
-	  		          message.setText("");
-//	  		          addMessage(message.getText(), userName);
-	  	        	}else{
-	  	        		 boolean message_sent = Connector.SendMessage(message.getText(),
-	  	        			  String.valueOf(ToSend.getSelectedItem()) );
-	    		          message.setText("");
-//		  		          addMessage(message.getText(), userName + " to " +   ToSend.getSelectedItem());
-
-	  	        	}
+                	if( message.getText()!=null && message.getText()!=""
+	        		&& message.getText()!= ""){
+	                    
+                		if( String.valueOf(ToSend.getSelectedItem()).equals("All")){
+		  		          boolean message_sent = Connector.SendMessage(message.getText() );
+		  		          message.setText("");
+	//	  		          addMessage(message.getText(), userName);
+		  	        	}else{
+		  	        		 boolean message_sent = Connector.SendMessage(message.getText(),
+		  	        			  String.valueOf(ToSend.getSelectedItem()) );
+		    		          message.setText("");
+	//		  		          addMessage(message.getText(), userName + " to " +   ToSend.getSelectedItem());
+	
+		  	        	}
+                		
+                	}
             }
         });
         

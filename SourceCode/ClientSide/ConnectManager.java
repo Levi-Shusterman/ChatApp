@@ -28,7 +28,7 @@ public class ConnectManager implements Client{
   
   // connection info
    private Integer Port = 9090;
-   private String IP_Address = "127.0.0.1";
+   private String IP_Address = "192.168.1.69" ;
    
      // Network Items
    boolean Connected;
@@ -72,6 +72,9 @@ public class ConnectManager implements Client{
   @SuppressWarnings("null")
   @Override
   public boolean SendMessage(String message){
+	  if( message.length() == 0)
+		  return false;
+	  
       Vector<String> out_message = new Vector<String>();
       out_message.add("ALL");
       out_message.add(message);
@@ -95,6 +98,9 @@ public class ConnectManager implements Client{
    * */
   @Override
   public boolean SendMessage( String message, String to_whom){
+	  if( message.length() == 0)
+		  return false;
+	  
       Vector<String> out_message = new Vector<String>();
       out_message.add("ONE");
       out_message.add(to_whom);
@@ -117,7 +123,9 @@ public class ConnectManager implements Client{
 
 @Override
 public boolean SendName(String name) {
-	  Vector<String> out_message = new Vector<String>();
+	  
+	
+	Vector<String> out_message = new Vector<String>();
       out_message.add("NAME");
 	  out_message.add(name);
 	  
