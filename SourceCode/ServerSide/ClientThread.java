@@ -206,7 +206,52 @@ public void run(){
 			   to_send.add(message);
 			   
 			   sendMessageToAll(to_send);
-	 	   }		
+	 	   }
+		   /**
+		    * Send the message to one person
+		    */
+		   if( key.equals("ONE")){
+			   Gui.history.insert("Sending message from " + MyName +
+					   " to " + readin.elementAt(1),0);
+			   
+			   Vector<String> to_send = new Vector<String>();
+			   String message = readin.elementAt(2);
+			   String to_who = readin.elementAt(1);
+			   
+			   to_send.add(MyName);
+			   to_send.add(message);
+			   
+			   sendMessageToOne(to_send,to_who, 0);
+		   }
+	}
+	
+	private void sendMessageToOne(Vector<String> message, String to_who, 
+			int curr_index) {
+		// we went over
+		if( curr_index == outStreams.size()){
+			Gui.history.insert("Failed to send a lone message from "
+					+ MyName + " to " + to_who + " : Passed over all the output streams",0);
+			
+			return;
+		}
+		
+	   // Index is initialized
+	   if(outStreams.elementAt(curr_index) != null){
+		   
+		   // Don't resend messages to yourself 
+		   String name_of_thread = outStreams.elementAt(curr_index).Name; 
+		   if( !MyName.equals( name_of_thread )){
+			   
+			   if( to_who.equals(name_of_thread)){
+			   // To the socket object output stream of this thread, 
+			   			// write the message   
+				   outStreams.elementAt(curr_index).sendMessage(message);
+				   return;
+			   }
+		   }
+	   }
+	   
+	   sendMessageToOne(message,to_who, curr_index+1);
 	}
 	
 	private void sendMessageToAll( Vector<String> message){

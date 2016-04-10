@@ -75,7 +75,7 @@ public class ChatGui extends JFrame implements GuiClient
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         
-        message = new JTextField(30);
+        message = new JTextField(25);
         message.setFont(new Font("Arial", Font.PLAIN, 16));
         
        
@@ -86,19 +86,37 @@ public class ChatGui extends JFrame implements GuiClient
         sendButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ev){
     	        if( message.getText()!=null && message.getText()!=""){
+    	        	if( String.valueOf(ToSend.getSelectedItem()).equals("All")){
     		          boolean message_sent = Connector.SendMessage(message.getText() );
     		          message.setText("");
+	  		          addMessage(message.getText(), userName);
+    	        	}else{
+    	        	  boolean message_sent = Connector.SendMessage(message.getText(),
+    	        			  String.valueOf(ToSend.getSelectedItem()) );
+      		          message.setText("");
+	  		          addMessage(message.getText(), userName + " to " +   ToSend.getSelectedItem());
+    	        	}
     	        }
     	       }
             });
+
         // send message by pressing enter
         sendButton.addKeyListener(new KeyAdapter(){
             @Override
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER)
-                    addMessage(message.getText(), userName);
-                    boolean message_sent = Connector.SendMessage(message.getText() );
-		            message.setText("");
+	                
+                    if( String.valueOf(ToSend.getSelectedItem()).equals("All")){
+	  		          boolean message_sent = Connector.SendMessage(message.getText() );
+	  		          message.setText("");
+	  		          addMessage(message.getText(), userName);
+	  	        	}else{
+	  	        		 boolean message_sent = Connector.SendMessage(message.getText(),
+	  	        			  String.valueOf(ToSend.getSelectedItem()) );
+	    		          message.setText("");
+		  		          addMessage(message.getText(), userName + " to " +   ToSend.getSelectedItem());
+
+	  	        	}
             }
         });
         
@@ -106,8 +124,9 @@ public class ChatGui extends JFrame implements GuiClient
         // enter, the message that is stored in the message field will be sent
         getRootPane().setDefaultButton(sendButton);
               
+        bottomPanel.add(new JLabel(userName));
         bottomPanel.add(message);
-        bottomPanel.add(sendButton); 
+        bottomPanel.add(sendButton);
         
         ToSend = new JComboBox<String>();
         bottomPanel.add(ToSend);
@@ -120,10 +139,10 @@ public class ChatGui extends JFrame implements GuiClient
         add(usersPanel, "West");
         add(chatPanel, "Center");
         
+        setVisible(true);
         Connector = new ConnectManager(this);
         Connector.SendName(userName);
                 
-        setVisible(true);
     } // end CountDown constructor
     
     /**
