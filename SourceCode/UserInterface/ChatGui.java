@@ -67,8 +67,9 @@ public class ChatGui extends JFrame implements GuiClient
         history = new JTextArea();
         history.setEditable(false);
         
+        JScrollPane scrollable = new JScrollPane(history);
         history.setFont(new Font("Arial", Font.PLAIN, 16));
-        chatPanel.add(history, "Center");
+        chatPanel.add(scrollable, "Center");
         
         // Create all of the members of the bottom panel: the message area and send
         // button
