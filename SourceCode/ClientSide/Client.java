@@ -22,13 +22,13 @@ public interface Client {
 	boolean SendMessage(String message);
 	
 	/**TODO
-	 * Send a message to specified users in the chat room
+	 * Send a message to a specified user in the chat room
 	 * 
 	 * @param message
 	 * @param to_whom
 	 * @return True if sent correctly, false if not
 	 */
-	boolean SendMessage(String message, Vector<String> to_whom);
+	boolean SendMessage(String message, String to_whom);
 	
 	/**
 	 * Send the name of the user to the server upon startup

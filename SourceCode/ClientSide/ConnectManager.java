@@ -91,12 +91,27 @@ public class ConnectManager implements Client{
   }
   
   /**
-   * Send a message to the users specified in the users[] array
+   * Send a message to the specified user
    * */
   @Override
-  public boolean SendMessage( String message, Vector<String>to_whom){
-    //TODO
-	  return false;
+  public boolean SendMessage( String message, String to_whom){
+      Vector<String> out_message = new Vector<String>();
+      out_message.add("ONE");
+      out_message.add(to_whom);
+      out_message.add(message);
+	  
+	  try
+      {
+        Out.writeObject(out_message);
+        Gui.DisplayMessage(message, "Me to : " + to_whom);
+      }
+      catch (Exception e) 
+      {
+        Gui.DebugMessage("Client: Error in processing message :  " + message);
+        return false;
+      }
+      
+      return true;
   }
 
 
