@@ -2,8 +2,10 @@
 
 Networked Chat Application
 
-To run this application: Just execute server.jar first, and then ChatGui.jar. 
-You can have as many ChatGuis open as you like.
+To run this application: Execute server.jar first, and then ChatGui.jar.
+To change the IP and Port that the Client connects to, modify the class variables in ConnectManager.java.
+The server runs on the local IP and always uses port 9090.
+
 
 The Chat Clients and Server connect to each other using Socket
 and ServerSocket on Localhost.
