@@ -11,5 +11,5 @@ The Chat Clients and Server connect to each other using Socket
 and ServerSocket on Localhost.
 
 Written for CS 342, Software Design
-Taught by Professor Troy 
-At the University of Illinois at Chicago
+taught by Professor Troy 
+at the University of Illinois at Chicago
